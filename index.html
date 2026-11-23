@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vendora | Marketplace demo</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<div class="demo">Demo marketplace built by <a href="https://marcusolive.github.io">Marcus Oliveira</a>. Fictional store: products, ratings and prices are sample data and no payment is processed.</div>
+
+<header class="top">
+  <div class="row">
+    <a class="logo" href="#"><i>V</i>vendora</a>
+    <div class="deliver">Deliver to<b>📍 New York 10001</b></div>
+    <div class="search">
+      <select id="scat"><option>All</option></select>
+      <input id="q" placeholder="Search Vendora" autocomplete="off">
+      <button id="go" aria-label="Search">⌕</button>
+      <div class="sugg" id="sugg"></div>
+    </div>
+    <div class="acct">Hello, sign in<b>Account & Lists</b></div>
+    <div class="acct">Returns<b>& Orders</b></div>
+    <button class="cartbtn" id="cartbtn" aria-label="Cart"><b id="count">0</b><svg viewBox="0 0 40 34" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6l5 20h20l4-14H11"/><circle cx="15" cy="29" r="2.5"/><circle cx="31" cy="29" r="2.5"/></svg>Cart</button>
+  </div>
+  <nav class="cats"><div class="row" id="cats"></div></nav>
+</header>
+
+<div class="wrap">
+  <section class="hero" id="hero">
+    <div class="slide on"><div><h2>Black Week: up to 45% off electronics</h2><p>Headphones, smartwatches, laptops and more. Free delivery on orders over $35.</p><a class="cta" href="#results" data-cat="Electronics">Shop the deals</a></div><svg viewBox="0 0 100 100"><path d="M20 55a30 30 0 0 1 60 0" fill="none" stroke="#fff" stroke-width="7"/><rect x="12" y="50" width="16" height="28" rx="6" fill="#ffc933"/><rect x="72" y="50" width="16" height="28" rx="6" fill="#ffc933"/></svg></div>
+    <div class="slide"><div><h2>Home upgrades from $19</h2><p>Coffee makers, air fryers and smart lamps with next-day delivery.</p><a class="cta" href="#results" data-cat="Home">Upgrade your home</a></div><svg viewBox="0 0 100 100"><rect x="26" y="20" width="48" height="62" rx="10" fill="#fff"/><rect x="34" y="30" width="32" height="18" rx="4" fill="#ffc933"/><circle cx="50" cy="64" r="8" fill="#e02434"/></svg></div>
+    <div class="slide"><div><h2>New season sneakers</h2><p>Run, train and walk in comfort. Buy 2, get 15% off.</p><a class="cta" href="#results" data-cat="Fashion">See the collection</a></div><svg viewBox="0 0 100 100"><path d="M10 62c10 0 22-4 30-14l10 8c10 6 26 8 40 10v12H10z" fill="#fff"/><path d="M10 74h80" stroke="#ffc933" stroke-width="6"/></svg></div>
+    <div class="dots" id="dots"><i class="on"></i><i></i><i></i></div>
+  </section>
+
+  <section class="deal">
+    <div class="dealh"><h3>Today's deals</h3><span class="timer" id="timer">Ends in 05:59:59</span><a href="#results" id="seedeals">See all deals →</a></div>
+    <div class="strip" id="strip"></div>
+  </section>
+
+  <div class="main" id="results">
+    <aside class="f">
+      <h4>Delivery</h4>
+      <label><input type="checkbox" id="ffree"> Free delivery</label>
+      <label><input type="checkbox" id="fdeal"> Today's deals only</label>
+      <h4>Customer rating</h4>
+      <label><input type="radio" name="r" value="0" checked> Any</label>
+      <label><input type="radio" name="r" value="4"> <span class="stars">★★★★☆</span> & up</label>
+      <label><input type="radio" name="r" value="4.5"> <span class="stars">★★★★½</span> & up</label>
+      <h4>Max price: <span id="pv">$500</span></h4>
+      <input type="range" id="fprice" min="10" max="500" step="10" value="500">
+      <h4>Pay with</h4>
+      <label style="color:var(--muted)">Card · PIX · PayPal</label>
+    </aside>
+    <section class="results">
+      <div class="rh"><b id="rcount"></b><label>Sort by <select id="sort"><option value="feat">Featured</option><option value="lo">Price: low to high</option><option value="hi">Price: high to low</option><option value="rate">Avg. customer rating</option><option value="off">Biggest discount</option></select></label></div>
+      <div class="grid" id="grid"></div>
+    </section>
+  </div>
+</div>
+
+<footer>© Vendora (fictional) · Marketplace demo built with HTML, CSS and JavaScript by <a href="https://marcusolive.github.io">Marcus Oliveira</a></footer>
+
+<div class="shade" id="shade"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true"></div>
+
+<aside class="drawer" id="drawer" aria-label="Cart">
+  <div class="dh"><h3 id="dtitle">Shopping cart</h3><button class="x" style="position:static" id="dclose" aria-label="Close">×</button></div>
+  <div class="free" id="free"></div>
+  <div class="items" id="items"></div>
+  <div class="foot" id="foot"></div>
+</aside>
+<div class="done" id="done"><div class="box"><div class="c">✓</div><h3>Order placed!</h3><p style="color:var(--muted);margin:8px 0 16px">Demo only: no payment was made. In a real store this step connects to Stripe, Mercado Pago, PayPal or PIX, sends the confirmation email and creates the order in the ERP.</p><button class="buy" id="doneok" style="width:100%">Keep shopping</button></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
